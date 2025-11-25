@@ -14,7 +14,6 @@ import { mdiMagnify } from '@mdi/js';
 import InputForm from '../InputForm';
 import { Product } from '@/interfaces/Product';
 import { ChangeEvent, useEffect, useState, useTransition } from 'react';
-import productList from './productList';
 import ProductCard from '../ProductCard';
 import useResponsive from '@/hooks/useResponsive';
 import Cart from '../Cart';
@@ -23,6 +22,7 @@ import ButtonLink from '../ButtonLink';
 import { ProductListByType } from './interfaces/ProductListByType';
 import ContainerLoading from '../Loadings/ContainerLoading';
 import SwitchFilter from '../SwitchFilter';
+import useProducts from '@/hooks/useProducts';
 
 interface ShowcaseProps {
   isNavigating: boolean;
@@ -31,6 +31,7 @@ interface ShowcaseProps {
 
 const Showcase = ({ isNavigating, setIsNavigating }: ShowcaseProps) => {
   const { isXxl, isLg, isLgDown, isMdDown, isXs } = useResponsive();
+  const { products: productList, loading: loadingProducts, error } = useProducts();
   const [productListByType, setProductListByType] = useState<
     ProductListByType[]
   >([]);
@@ -289,6 +290,24 @@ const Showcase = ({ isNavigating, setIsNavigating }: ShowcaseProps) => {
   useEffect(() => {
     if (productList.length) filterProductsByType();
   }, [productList]);
+
+  if (loadingProducts) {
+    return (
+      <ShowcaseContainerFlex vertical align="center">
+        <ContainerLoading />
+      </ShowcaseContainerFlex>
+    );
+  }
+
+  if (error) {
+    return (
+      <ShowcaseContainerFlex vertical align="center">
+        <Flex style={{ padding: '32px', color: '#d81616' }}>
+          Erro ao carregar produtos. Tente novamente mais tarde.
+        </Flex>
+      </ShowcaseContainerFlex>
+    );
+  }
 
   return (
     <ShowcaseContainerFlex vertical align="center">
