@@ -15,14 +15,14 @@ datasource db {
 
 // Product model based on existing interface
 model Product {
-  id          Int           @id @default(autoincrement())
+  id          Int          @id @default(autoincrement())
   title       String
   image       String
   price       Float
   type        ProductType
   order       Int
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
   ingredients Ingredient[]
 
   @@map("products")

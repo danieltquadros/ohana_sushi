@@ -15,7 +15,7 @@
     "plugin:import/warnings",
     "plugin:import/typescript",
     "plugin:react-hooks/recommended",
-    "plugin:next/recommended",
+    "next/core-web-vitals",
     "plugin:prettier/recommended",
     "prettier"
   ],
