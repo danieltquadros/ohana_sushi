@@ -74,3 +74,5 @@ export const useProducts = (
     refetch: fetchProducts,
   };
 };
+
+export default useProducts;
