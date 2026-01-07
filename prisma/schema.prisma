@@ -15,15 +15,16 @@ datasource db {
 
 // Product model based on existing interface
 model Product {
-  id          Int          @id @default(autoincrement())
-  title       String
-  image       String
-  price       Float
-  type        ProductType
-  order       Int
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  ingredients Ingredient[]
+  id            Int          @id @default(autoincrement())
+  title         String
+  image         String
+  price         Float
+  productTypeId Int
+  type          ProductType  @relation(fields: [productTypeId], references: [id])
+  order         Int
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  ingredients   Ingredient[]
 
   @@map("products")
 }
@@ -39,18 +40,10 @@ model Ingredient {
   @@map("ingredients")
 }
 
-enum ProductType {
-  ALL
-  COMBO
-  PORTION
-  POKES
-  YAKISOBA
-  MEGA_HOT
-  TEMAKI
-  ITEM
-  DRINK
-  OTHER
-  URAMAKIS
-  HOTS
-  HOSSOS
+model ProductType {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  products Product[]
+
+  @@map("product_types")
 }

@@ -38,19 +38,23 @@ export const useProducts = (
       const data = await response.json();
 
       // Transform API response to match frontend interface
-      const transformedProducts: Product[] = data.map((product: any) => ({
-        id: product.id,
-        title: product.title,
-        image: product.image,
-        price: product.price,
-        type: product.type,
-        order: product.order,
-        ingredientList: product.ingredients.map((ingredient: any) => ({
-          id: ingredient.id,
-          name: ingredient.name,
-          quantity: ingredient.quantity,
-        })),
-      }));
+      const transformedProducts: Product[] = data
+        .filter((product: any) => product.price > 0)
+        .map((product: any) => {
+          return {
+            id: product.id,
+            title: product.title,
+            image: product.image,
+            price: product.price,
+            type: product.type.name, // 👈 Adicione .name para pegar apenas a string
+            order: product.order,
+            ingredientList: product.ingredients.map((ingredient: any) => ({
+              id: ingredient.id,
+              name: ingredient.name,
+              quantity: ingredient.quantity,
+            })),
+          };
+        });
 
       setProducts(transformedProducts);
     } catch (err) {

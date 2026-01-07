@@ -10,9 +10,13 @@ export default async function handler(
       const { type } = req.query;
 
       const products = await prisma.product.findMany({
-        where: type && type !== 'ALL' ? { type: type as any } : {},
+        where:
+          type && type !== 'ALL'
+            ? { type: { name: type as string } } // 👈 Filtrar pelo nome do tipo relacionado
+            : {},
         include: {
           ingredients: true,
+          type: true,
         },
         orderBy: {
           order: 'asc',
@@ -28,14 +32,15 @@ export default async function handler(
 
   if (req.method === 'POST') {
     try {
-      const { title, image, price, type, order, ingredients } = req.body;
+      const { title, image, price, productTypeId, order, ingredients } =
+        req.body; // 👈 Mudou para productTypeId
 
       const product = await prisma.product.create({
         data: {
           title,
           image,
           price,
-          type,
+          productTypeId, // 👈 Agora passa o ID
           order,
           ingredients: {
             create: ingredients.map((ingredient: any) => ({
@@ -46,6 +51,7 @@ export default async function handler(
         },
         include: {
           ingredients: true,
+          type: true, // 👈 Adicione isso também aqui para retornar o tipo completo
         },
       });
 

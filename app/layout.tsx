@@ -54,7 +54,7 @@ export default function RootLayout({
               gap={16}
               style={{
                 height: '64px',
-                background: '#E1E1E1', // '#F7F7F7',
+                background: '#E1E1E1',
                 borderTop: '1px solid #d81616aa',
               }}
             >

@@ -7,7 +7,6 @@ import {
   ShowCaseFlex,
 } from './styles';
 
-import './styles.css';
 import Icon from '@mdi/react';
 import { IoMdSwitch } from 'react-icons/io';
 import { mdiMagnify } from '@mdi/js';
@@ -23,6 +22,7 @@ import { ProductListByType } from './interfaces/ProductListByType';
 import ContainerLoading from '../Loadings/ContainerLoading';
 import SwitchFilter from '../SwitchFilter';
 import useProducts from '@/hooks/useProducts';
+import './styles.css';
 
 interface ShowcaseProps {
   isNavigating: boolean;
@@ -31,7 +31,11 @@ interface ShowcaseProps {
 
 const Showcase = ({ isNavigating, setIsNavigating }: ShowcaseProps) => {
   const { isXxl, isLg, isLgDown, isMdDown, isXs } = useResponsive();
-  const { products: productList, loading: loadingProducts, error } = useProducts();
+  const {
+    products: productList,
+    loading: loadingProducts,
+    error,
+  } = useProducts();
   const [productListByType, setProductListByType] = useState<
     ProductListByType[]
   >([]);
