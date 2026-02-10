@@ -6,7 +6,7 @@ export const comboList: Product[] = [
     title: 'Combo Monstro',
     image:
       'https://lh3.googleusercontent.com/d/1duzAizn_mXMxlUYDrZ4_iCeAaR_p7fsC',
-    price: 239.9,
+    price: 249.9,
     type: 'COMBO',
     order: 1,
     ingredientList: [
@@ -52,7 +52,7 @@ export const comboList: Product[] = [
     title: 'Combo Premium',
     image:
       'https://lh3.googleusercontent.com/d/1gwyY36uOZmY0hcehX1uA2rql__vuHT4l',
-    price: 169.9,
+    price: 179.9,
     type: 'COMBO',
     order: 2,
     ingredientList: [
@@ -93,7 +93,7 @@ export const comboList: Product[] = [
     title: 'Combo da Casa',
     image:
       'https://lh3.googleusercontent.com/d/11Z8DQ64cVg39UgvJ982g-Ogx5sTlSTuj',
-    price: 69.9,
+    price: 79.9,
     type: 'COMBO',
     order: 3,
     ingredientList: [
@@ -124,7 +124,7 @@ export const comboList: Product[] = [
     title: 'Combo Flash',
     image:
       'https://lh3.googleusercontent.com/d/1Nje2Iqis3hrmP6gobAotUbs8Lz-BXwF5',
-    price: 69.9,
+    price: 79.9,
     type: 'COMBO',
     order: 4,
     ingredientList: [
@@ -155,7 +155,7 @@ export const comboList: Product[] = [
     title: 'Combo Grenal',
     image:
       'https://lh3.googleusercontent.com/d/1R95iR8J9QdVs52PzJwNRoLMn8Z6A_2RR',
-    price: 109.9,
+    price: 119.9,
     type: 'COMBO',
     order: 5,
     ingredientList: [
@@ -206,7 +206,7 @@ export const comboList: Product[] = [
     title: 'Combo Almoço',
     image:
       'https://lh3.googleusercontent.com/d/1rkK9pguajUzPNoM1j5o40xmx_n1vd4aG',
-    price: 59.9,
+    price: 69.9,
     type: 'COMBO',
     order: 6,
     ingredientList: [
@@ -232,7 +232,7 @@ export const comboList: Product[] = [
     title: 'Combo Ura',
     image:
       'https://lh3.googleusercontent.com/d/13fdgNmxTEOIxSxL-bVV2q-DUPsv5IK6C',
-    price: 34.9,
+    price: 39.9,
     type: 'COMBO',
     order: 7,
     ingredientList: [
@@ -253,7 +253,7 @@ export const comboList: Product[] = [
     title: 'Combo Duplo + 2 Temaki Skin',
     image:
       'https://lh3.googleusercontent.com/d/1I4aWuLfm3utWV0RKhSl3fz45q087lJAs',
-    price: 79.9,
+    price: 89.9,
     type: 'COMBO',
     order: 8,
     ingredientList: [
@@ -294,7 +294,7 @@ export const comboList: Product[] = [
     title: 'Combo Duplo + 1 Filadélfia',
     image:
       'https://lh3.googleusercontent.com/d/1rr5eUsPGItU_Z8WkXJoQiRrceXCVfmpB',
-    price: 79.9,
+    price: 89.9,
     type: 'COMBO',
     order: 9,
     ingredientList: [
@@ -335,7 +335,7 @@ export const comboList: Product[] = [
     title: 'Combo Executivo',
     image:
       'https://lh3.googleusercontent.com/d/1yQ2aqPFl-7uqf6Gy9mo0O6r_3cI9LVaw',
-    price: 39.9,
+    price: 49.9,
     type: 'COMBO',
     order: 10,
     ingredientList: [
@@ -361,7 +361,7 @@ export const comboList: Product[] = [
     title: 'Combo Gourmet',
     image:
       'https://lh3.googleusercontent.com/d/1oR5mBq_P7K96MGvwnlMENzrHTZU-jc81',
-    price: 139.9,
+    price: 149.9,
     type: 'COMBO',
     order: 11,
     ingredientList: [
@@ -402,7 +402,7 @@ export const comboList: Product[] = [
     title: 'Combo Skin Salmão',
     image:
       'https://lh3.googleusercontent.com/d/1zGotjudijDM22uNvySvl2pkgKhTjOYGd',
-    price: 79.9,
+    price: 89.9,
     type: 'COMBO',
     order: 12,
     ingredientList: [
@@ -438,7 +438,7 @@ export const comboList: Product[] = [
     title: 'Combo Ohana',
     image:
       'https://lh3.googleusercontent.com/d/1R7oaZE-50rAc8psgEw1uaZGVMNXs8Hhs',
-    price: 129.9,
+    price: 149.9,
     type: 'COMBO',
     order: 13,
     ingredientList: [
@@ -556,7 +556,7 @@ export const comboList: Product[] = [
     title: 'Combo do Chefe',
     image:
       'https://lh3.googleusercontent.com/d/1cdzKKqlmZtJR6dzwsEJCklRSgfBy0ld8',
-    price: 259.9,
+    price: 269.9,
     type: 'COMBO',
     order: 16,
     ingredientList: [
