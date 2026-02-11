@@ -16,7 +16,7 @@ export const portionList: Product[] = [
     title: 'Hot Alho poró',
     image:
       'https://lh3.googleusercontent.com/d/1CPfyfFrY8Iqco2j8QmWDOHsr7ZcVNbgO',
-    price: 21.9,
+    price: 23.9,
     type: 'PORTION',
     order: 2,
     ingredientList: [],
