@@ -29,7 +29,9 @@ export const useProducts = (
         params.append('type', options.type);
       }
 
-      const response = await fetch(`/api/products?${params.toString()}`);
+      // Usar backend API ao invés de API routes locais
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || '/api';
+      const response = await fetch(`${apiUrl}/products?${params.toString()}`);
 
       if (!response.ok) {
         throw new Error(`Failed to fetch products: ${response.status}`);
@@ -45,13 +47,13 @@ export const useProducts = (
             id: product.id,
             title: product.title,
             image: product.image,
-            price: product.price,
-            type: product.type.name, // 👈 Adicione .name para pegar apenas a string
+            price: parseFloat(product.price), // Backend retorna string, converter para number
+            type: product.type.name, // Extrair nome do tipo
             order: product.order,
-            ingredientList: product.ingredients.map((ingredient: any) => ({
-              id: ingredient.id,
-              name: ingredient.name,
-              quantity: ingredient.quantity,
+            ingredientList: product.ingredients.map((ing: any) => ({
+              id: ing.ingredient.id, // Acessar ingredient aninhado
+              name: ing.ingredient.name,
+              quantity: ing.quantity,
             })),
           };
         });

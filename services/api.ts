@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://sushi-production-3f30.up.railway.app';
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL ||
+  'https://sushi-production-3f30.up.railway.app';
 
 export async function fetchItems() {
   try {
