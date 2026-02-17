@@ -2,10 +2,10 @@ name: Keep-Alive Backend PRD
 
 on:
   schedule:
-    # Madrugada: 00:00-01:00 (a cada 5 minutos)
-    - cron: "*/5 0 * * *"
-    # Manhã/Tarde/Noite: 10:00-23:55 (a cada 5 minutos)
-    - cron: "*/5 10-23 * * *"
+    # Madrugada: 00:00-01:00 (a cada 4 minutos - previne cold start Neon)
+    - cron: "*/4 0 * * *"
+    # Manhã/Tarde/Noite: 10:00-23:55 (a cada 4 minutos - previne cold start Neon)
+    - cron: "*/4 10-23 * * *"
   workflow_dispatch: # Permite executar manualmente
 
 jobs:
