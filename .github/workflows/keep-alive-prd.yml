@@ -1,18 +1,24 @@
 name: Keep-Alive Backend PRD
 
+# ⚠️ WORKFLOW DESABILITADO
+# Motivo: Migrado para UptimeRobot (ping a cada 10 minutos, mais confiável)
+# Data: 18/02/2026
+# GitHub Actions Free Tier tem delays imprevisíveis (15-20 min), causando cold starts
+# UptimeRobot Free garante execução precisa a cada 10 minutos
+
 on:
-  schedule:
-    # 00:00-01:00 BRT = 03:00-04:00 UTC (madrugada)
-    - cron: "*/4 3 * * *"
+  # schedule:
+  #   # 00:00-01:00 BRT = 03:00-04:00 UTC (madrugada)
+  #   - cron: "*/4 3 * * *"
+  #   
+  #   # 10:00-23:59 BRT = 13:00-02:59 UTC (manhã/tarde/noite)
+  #   # Parte 1: 10:00-20:00 BRT = 13:00-23:00 UTC
+  #   - cron: "*/4 13-23 * * *"
+  #   
+  #   # Parte 2: 21:00-23:59 BRT = 00:00-02:59 UTC (dia seguinte)
+  #   - cron: "*/4 0-2 * * *"
     
-    # 10:00-23:59 BRT = 13:00-02:59 UTC (manhã/tarde/noite)
-    # Parte 1: 10:00-20:00 BRT = 13:00-23:00 UTC
-    - cron: "*/4 13-23 * * *"
-    
-    # Parte 2: 21:00-23:59 BRT = 00:00-02:59 UTC (dia seguinte)
-    - cron: "*/4 0-2 * * *"
-    
-  workflow_dispatch: # Permite executar manualmente
+  workflow_dispatch: # Permite executar manualmente para testes
 
 jobs:
   ping:
