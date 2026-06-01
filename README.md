@@ -1,36 +1,121 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛒 Ohana Sushi — Customer Storefront
 
-## Getting Started
+[![Next.js](https://img.shields.io/badge/Next.js-15-000000?logo=nextdotjs)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Vercel](https://img.shields.io/badge/Deployed-Vercel-000000?logo=vercel)](https://www.ohanasushidelivery.com.br)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-First, run the development server:
+> Customer-facing e-commerce for the Ohana Sushi delivery system.
+> Built with Next.js, styled-components, Ant Design, and Redux.
+
+**Status:** 🟢 Production — Live at [ohanasushidelivery.com.br](https://www.ohanasushidelivery.com.br)
+
+---
+
+## 📋 Table of Contents
+
+- [About](#-about)
+- [Tech Stack](#%EF%B8%8F-tech-stack)
+- [Features](#-features)
+- [Getting Started](#-getting-started)
+- [Environment Variables](#-environment-variables)
+- [Project Structure](#%EF%B8%8F-project-structure)
+- [Available Scripts](#-available-scripts)
+- [Deployment](#%EF%B8%8F-deployment)
+- [License](#-license)
+
+---
+
+## 🎯 About
+
+This repository is part of the **Ohana Sushi** project — a full-stack delivery system currently in active commercial use.
+
+The full project consists of three integrated applications:
+
+- 🛒 **[ohana_sushi](https://github.com/danieltquadros/ohana_sushi)** — Customer storefront (this repository) — Next.js
+- ⚙️ **[ohana-api](https://github.com/danieltquadros/ohana-api)** — REST API backend — NestJS
+- 🎛️ **[ohana-admin](https://github.com/danieltquadros/ohana-admin)** — Admin panel — Angular
+
+This frontend renders the public-facing menu, handles cart logic, and orchestrates the customer ordering flow.
+
+## 🛠️ Tech Stack
+
+- **Framework:** Next.js 15 (App Router) + React
+- **Language:** TypeScript
+- **Styling:** styled-components + Ant Design
+- **State management:** Redux Toolkit
+- **HTTP client:** fetch with custom hooks
+- **Deploy:** Vercel (CI/CD via GitHub Actions)
+
+## ✨ Features
+
+- 📱 Responsive product catalog with dynamic categories
+- 🛒 Cart with persistent state across sessions
+- 🍣 Combo customization (when applicable)
+- 💬 WhatsApp integration for order placement
+- ⚡ SSR/SSG with Next.js for performance and SEO
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 20+
+- npm / pnpm / yarn
+
+### Installation
+
+```bash
+git clone https://github.com/danieltquadros/ohana_sushi.git
+cd ohana_sushi
+npm install
+```
+
+### Running locally
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+App will be available at [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🌐 Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create a `.env.local` file in the project root:
 
-## Learn More
+```env
+NEXT_PUBLIC_API_URL=https://ohana-api-dev-a7kk.onrender.com/api
+```
 
-To learn more about Next.js, take a look at the following resources:
+For production, point to the production API:
+`https://ohana-api-prd.onrender.com/api`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🏗️ Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+src/
+├── app/             # Next.js App Router pages and layouts
+├── components/      # Reusable UI components
+├── hooks/           # Custom React hooks
+├── store/           # Redux slices and store config
+├── styles/          # Global styles
+└── utils/           # Helpers and constants
+```
 
-## Deploy on Vercel
+## 📜 Available Scripts
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Script | Description |
+|--------|-------------|
+| `npm run dev` | Start development server |
+| `npm run build` | Build production bundle |
+| `npm run start` | Start production server |
+| `npm run lint` | Run ESLint |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## ☁️ Deployment
+
+- **Production:** Vercel (auto-deploy on push to `master`)
+- **Preview:** Vercel (auto-deploy on push to `development`)
+- **Domain:** Custom domain via Hostinger DNS (CNAME → Vercel)
+
+## 📄 License
+
+MIT
