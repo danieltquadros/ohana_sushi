@@ -1,26 +1,26 @@
-import { Drawer, Flex, Switch } from 'antd';
-import { ProductListByType } from '../interfaces/ProductListByType';
+import { Drawer, Flex } from 'antd';
+import { MenuSection } from '@/interfaces/MenuSection';
 import SwitchFilter from '@/components/SwitchFilter';
 
 interface FilterDrawerProps {
   open: boolean;
   onClose: () => void;
-  selectedProductType: string[];
-  handleProductFilter: (e: boolean, productType: ProductType) => void;
-  productListByType: ProductListByType[];
+  selectedSectionIds: string[];
+  handleSectionFilter: (active: boolean, sectionKey: string) => void;
+  sections: MenuSection[];
   loading?: boolean;
 }
+
+const ALL_SECTIONS = 'ALL';
 
 const FilterDrawer = ({
   open,
   onClose,
-  selectedProductType,
-  handleProductFilter,
-  productListByType,
+  selectedSectionIds,
+  handleSectionFilter,
+  sections,
   loading,
 }: FilterDrawerProps) => {
-  console.log('1');
-
   return (
     <Drawer
       title="Filtros"
@@ -32,26 +32,30 @@ const FilterDrawer = ({
       <Flex gap={8} vertical>
         <SwitchFilter
           label="Todos"
-          selectedProductType={selectedProductType.includes('ALL')}
+          selectedProductType={selectedSectionIds.includes(ALL_SECTIONS)}
           handleProductFilter={() =>
-            handleProductFilter(selectedProductType.includes('ALL'), 'ALL')
+            handleSectionFilter(
+              selectedSectionIds.includes(ALL_SECTIONS),
+              ALL_SECTIONS,
+            )
           }
           loading={loading}
           defaultChecked={true}
         />
-        {productListByType.map((productType) => (
-          <SwitchFilter
-            label={productType.typeName}
-            selectedProductType={selectedProductType.includes(productType.type)}
-            handleProductFilter={() =>
-              handleProductFilter(
-                !selectedProductType.includes(productType.type),
-                productType.type,
-              )
-            }
-            loading={loading}
-          />
-        ))}
+        {sections.map((section) => {
+          const key = String(section.id);
+          return (
+            <SwitchFilter
+              key={key}
+              label={section.label}
+              selectedProductType={selectedSectionIds.includes(key)}
+              handleProductFilter={() =>
+                handleSectionFilter(!selectedSectionIds.includes(key), key)
+              }
+              loading={loading}
+            />
+          );
+        })}
       </Flex>
     </Drawer>
   );

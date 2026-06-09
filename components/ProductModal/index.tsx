@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { CartInterface } from '@/interfaces/CartInterface';
 import { useAppSelector } from '@/hooks/redux';
+import { cartKey } from '@/utils/cartKey';
 import ObservationContentCollapse from './components/ObservationContentCollapse';
 import './styles.css';
 import ModalTitle from './components/ModalTitle';
@@ -37,7 +38,7 @@ const ProductModal = ({
 }: ProductModalProps) => {
   const cart: CartInterface | null = useAppSelector((state) => state.cart.cart);
   const currentProductInCart = cart
-    ? cart.cartItemList.find((cil) => cil.id === product.id) || null
+    ? cart.cartItemList.find((cil) => cil.id === cartKey(product)) || null
     : null;
   const { Text } = Typography;
   const { isSmDown } = useResponsive();
@@ -83,7 +84,7 @@ const ProductModal = ({
       onOk={handleClose}
       onCancel={handleClose}
       className={
-        product.type === 'COMBO' && !isSmDown
+        product.kind === 'COMBO' && !isSmDown
           ? 'product-modal'
           : 'vertical-product-modal'
       }
@@ -94,7 +95,7 @@ const ProductModal = ({
         style={{
           padding: '0 12px',
         }}
-        vertical={product.type !== 'COMBO' || isSmDown}
+        vertical={product.kind !== 'COMBO' || isSmDown}
       >
         {imageError ? (
           <div
@@ -188,7 +189,7 @@ const ProductModal = ({
                       vertical
                       style={{
                         width:
-                          product.type !== 'COMBO' || isSmDown
+                          product.kind !== 'COMBO' || isSmDown
                             ? '311px'
                             : '224px',
                       }}

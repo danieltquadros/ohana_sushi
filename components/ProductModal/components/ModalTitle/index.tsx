@@ -34,7 +34,7 @@ const ModalTitle = ({ product, handleCancel }: ProductModalProps) => {
         {product.title}
       </Title>
       <Flex gap={4} align="center">
-        {product.type === 'COMBO' && (
+        {product.kind === 'COMBO' && (
           <Tag style={{ marginInlineEnd: '0px' }} color="#000">
             <Text
               style={{
