@@ -8,6 +8,7 @@ import { CartItemList } from '@/interfaces/CartItemList';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { CartInterface } from '@/interfaces/CartInterface';
 import { setCart } from '@/store/features/cart';
+import { cartKey } from '@/utils/cartKey';
 import { Flex, Typography } from 'antd';
 import Icon from '@mdi/react';
 import { mdiMinusThick, mdiPlusThick } from '@mdi/js';
@@ -50,9 +51,10 @@ const ChooseButton = ({
     }
     if (quantityItem > 0 && cart) {
       setQuantityItem(quantityItem - 1);
+      const key = cartKey(product);
       const newCartItem = cart.cartItemList
         .map((cil) => {
-          if (cil.id === product.id) {
+          if (cil.id === key) {
             return {
               ...cil,
               quantity: cil.quantity - 1,
@@ -73,9 +75,10 @@ const ChooseButton = ({
   };
 
   const handleAddItem = () => {
+    const key = cartKey(product);
     if (cart) {
       const item =
-        cart.cartItemList.find((cil) => cil.id === product.id) || null;
+        cart.cartItemList.find((cil) => cil.id === key) || null;
       if (item) {
         setQuantityItem(quantityItem + 1);
         const newCartItem = cart.cartItemList.map((cil) => {
@@ -100,7 +103,7 @@ const ChooseButton = ({
         const newCartItemList: CartItemList[] = [
           ...cart.cartItemList,
           {
-            id: product.id,
+            id: key,
             product,
             quantity: 1,
           },
@@ -117,7 +120,7 @@ const ChooseButton = ({
     } else {
       setQuantityItem(1);
       const newCartItemList: CartItemList = {
-        id: product.id,
+        id: key,
         product,
         quantity: 1,
       };
@@ -135,8 +138,9 @@ const ChooseButton = ({
 
   useEffect(() => {
     if (cart) {
+      const key = cartKey(product);
       const newQuantityItem =
-        cart.cartItemList.find((cartItem) => cartItem.id === product.id)
+        cart.cartItemList.find((cartItem) => cartItem.id === key)
           ?.quantity || 0;
       setQuantityItem(newQuantityItem);
       onHasItem(newQuantityItem > 0);
@@ -185,7 +189,9 @@ const ChooseButton = ({
         </DefaultButton>
       )}
       <RemoveItemModal
-        item={cart?.cartItemList.find((cil) => cil.id === product.id) || null}
+        item={
+          cart?.cartItemList.find((cil) => cil.id === cartKey(product)) || null
+        }
         isRemoveItemModalOpen={isRemoveItemModalOpen}
         onIsRemoveItemModalOpen={setIsRemoveItemModalOpen}
       />

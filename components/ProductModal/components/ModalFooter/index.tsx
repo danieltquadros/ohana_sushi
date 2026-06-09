@@ -97,7 +97,7 @@ const ModalFooter = ({
           height: '42px',
           padding: '0 12px',
           borderRadius:
-            (hasItem && !hideControls && product.type !== 'COMBO') ||
+            (hasItem && !hideControls && product.kind !== 'COMBO') ||
             (isSmDown && hasItem && !hideControls)
               ? '0'
               : '0 0 4px 4px',
@@ -124,7 +124,7 @@ const ModalFooter = ({
             currency: 'BRL',
           }).format(product.price)}
         </Title>
-        {activeKey.length > 0 && product.type === 'COMBO' && !isSmDown
+        {activeKey.length > 0 && product.kind === 'COMBO' && !isSmDown
           ? !hideControls && (
               <Flex gap={0} style={{ height: '42px' }} align="center">
                 {!hideKeepBuying && (
@@ -181,7 +181,7 @@ const ModalFooter = ({
           </Title>
         ) : null}
       </Flex>
-      {(product.type !== 'COMBO' || isSmDown) && !hideControls && (
+      {(product.kind !== 'COMBO' || isSmDown) && !hideControls && (
         <Collapse
           items={items}
           activeKey={activeKey}
