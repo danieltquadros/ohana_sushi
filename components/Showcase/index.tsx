@@ -11,17 +11,16 @@ import Icon from '@mdi/react';
 import { IoMdSwitch } from 'react-icons/io';
 import { mdiMagnify } from '@mdi/js';
 import InputForm from '../InputForm';
-import { Product } from '@/interfaces/Product';
 import { ChangeEvent, useEffect, useState, useTransition } from 'react';
 import ProductCard from '../ProductCard';
 import useResponsive from '@/hooks/useResponsive';
 import Cart from '../Cart';
 import FilterDrawer from './components/FilterDrawer';
 import ButtonLink from '../ButtonLink';
-import { ProductListByType } from './interfaces/ProductListByType';
 import ContainerLoading from '../Loadings/ContainerLoading';
 import SwitchFilter from '../SwitchFilter';
-import useProducts from '@/hooks/useProducts';
+import useMenu from '@/hooks/useMenu';
+import { MenuSection } from '@/interfaces/MenuSection';
 import './styles.css';
 
 interface ShowcaseProps {
@@ -29,273 +28,70 @@ interface ShowcaseProps {
   setIsNavigating: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+const ALL_SECTIONS = 'ALL';
+
 const Showcase = ({ isNavigating, setIsNavigating }: ShowcaseProps) => {
   const { isXxl, isLg, isLgDown, isMdDown, isXs } = useResponsive();
-  const {
-    products: productList,
-    loading: loadingProducts,
-    error,
-  } = useProducts();
-  const [productListByType, setProductListByType] = useState<
-    ProductListByType[]
-  >([]);
-  const [productListByTypeFiltered, setProductListByTypeFiltered] = useState<
-    ProductListByType[]
-  >([]);
-  const [selectedProductType, setSelectedProductType] = useState<string[]>([
-    'ALL',
+  const { sections, loading: loadingMenu, error } = useMenu();
+  const [sectionsFiltered, setSectionsFiltered] = useState<MenuSection[]>([]);
+  const [selectedSectionIds, setSelectedSectionIds] = useState<string[]>([
+    ALL_SECTIONS,
   ]);
   const [openFilterDrawer, setOpenFilterDrawer] = useState(false);
   const [loadingList, setLoadingList] = useState(false);
   const [isPending, startTransition] = useTransition();
 
-  const filterProductsByType = () => {
-    let newComboList: Product[] = [];
-    let newPortionList: Product[] = [];
-    let newPokesList: Product[] = [];
-    let newYakisobaList: Product[] = [];
-    let newMegaHotList: Product[] = [];
-    let newTemakiList: Product[] = [];
-    let newItemList: Product[] = [];
-    let newUramakisList: Product[] = [];
-    let newHotsList: Product[] = [];
-    let newHossosList: Product[] = [];
-    let newDrinkList: Product[] = [];
-    let newOtherList: Product[] = [];
-
-    productList.map((prod) => {
-      switch (prod.type) {
-        case 'COMBO':
-          newComboList = [...newComboList, prod];
-          break;
-        case 'PORTION':
-          newPortionList = [...newPortionList, prod];
-          break;
-        case 'POKES':
-          newPokesList = [...newPokesList, prod];
-          break;
-        case 'YAKISOBA':
-          newYakisobaList = [...newYakisobaList, prod];
-          break;
-        case 'MEGA_HOT':
-          newMegaHotList = [...newMegaHotList, prod];
-          break;
-        case 'TEMAKI':
-          newTemakiList = [...newTemakiList, prod];
-          break;
-        case 'ITEM':
-          newItemList = [...newItemList, prod];
-          break;
-        case 'URAMAKIS':
-          newUramakisList = [...newUramakisList, prod];
-          break;
-        case 'HOTS':
-          newHotsList = [...newHotsList, prod];
-          break;
-        case 'HOSSOS':
-          newHossosList = [...newHossosList, prod];
-          break;
-        case 'DRINK':
-          newDrinkList = [...newDrinkList, prod];
-          break;
-        case 'OTHER':
-          newOtherList = [...newOtherList, prod];
-          break;
-        default:
-          break;
-      }
-
-      let newProductListByType: ProductListByType[] = [];
-      if (newComboList.length)
-        newProductListByType = [
-          {
-            id: 1,
-            type: 'COMBO',
-            typeName: 'Combinados',
-            productLists: newComboList,
-            order: 1,
-          },
-        ];
-      if (newPortionList.length)
-        newProductListByType = [
-          ...newProductListByType,
-          {
-            id: 2,
-            type: 'PORTION',
-            typeName: 'Porções',
-            productLists: newPortionList,
-            order: 2,
-          },
-        ];
-      if (newPokesList.length)
-        newProductListByType = [
-          ...newProductListByType,
-          {
-            id: 3,
-            type: 'POKES',
-            typeName: 'Pokes',
-            productLists: newPokesList,
-            order: 3,
-          },
-        ];
-      if (newYakisobaList.length)
-        newProductListByType = [
-          ...newProductListByType,
-          {
-            id: 4,
-            type: 'YAKISOBA',
-            typeName: 'Yakisobas',
-            productLists: newYakisobaList,
-            order: 4,
-          },
-        ];
-      if (newMegaHotList.length)
-        newProductListByType = [
-          ...newProductListByType,
-          {
-            id: 5,
-            type: 'MEGA_HOT',
-            typeName: 'Mega Hots',
-            productLists: newMegaHotList,
-            order: 5,
-          },
-        ];
-      if (newTemakiList.length)
-        newProductListByType = [
-          ...newProductListByType,
-          {
-            id: 6,
-            type: 'TEMAKI',
-            typeName: 'Temakis',
-            productLists: newTemakiList,
-            order: 6,
-          },
-        ];
-      if (newItemList.length)
-        newProductListByType = [
-          ...newProductListByType,
-          {
-            id: 7,
-            type: 'ITEM',
-            typeName: 'Unidades',
-            productLists: newItemList,
-            order: 7,
-          },
-        ];
-      if (newUramakisList.length)
-        newProductListByType = [
-          ...newProductListByType,
-          {
-            id: 8,
-            type: 'URAMAKIS',
-            typeName: 'Uramakis',
-            productLists: newUramakisList,
-            order: 8,
-          },
-        ];
-      if (newHotsList.length) {
-        newProductListByType = [
-          ...newProductListByType,
-          {
-            id: 9,
-            type: 'HOTS',
-            typeName: 'Hots',
-            productLists: newHotsList,
-            order: 9,
-          },
-        ];
-      }
-      if (newHossosList.length) {
-        newProductListByType = [
-          ...newProductListByType,
-          {
-            id: 10,
-            type: 'HOSSOS',
-            typeName: 'Hossos',
-            productLists: newHossosList,
-            order: 10,
-          },
-        ];
-      }
-      if (newDrinkList.length)
-        newProductListByType = [
-          ...newProductListByType,
-          {
-            id: 11,
-            type: 'DRINK',
-            typeName: 'Bebidas',
-            productLists: newDrinkList,
-            order: 11,
-          },
-        ];
-      if (newOtherList.length)
-        newProductListByType = [
-          ...newProductListByType,
-          {
-            id: 12,
-            type: 'OTHER',
-            typeName: 'Outros',
-            productLists: newOtherList,
-            order: 12,
-          },
-        ];
-
-      newProductListByType.sort((a, b) => a.order - b.order);
-
-      setProductListByType(newProductListByType);
-      setProductListByTypeFiltered(newProductListByType);
-    });
-  };
-
-  const handleProductFilter = (e: boolean, productType: ProductType) => {
+  const handleSectionFilter = (active: boolean, sectionKey: string) => {
     setLoadingList(true);
 
     startTransition(() => {
-      if (productType === 'ALL' || (selectedProductType.length === 1 && !e)) {
-        setSelectedProductType(['ALL']);
-        setProductListByTypeFiltered(productListByType);
+      if (
+        sectionKey === ALL_SECTIONS ||
+        (selectedSectionIds.length === 1 && !active)
+      ) {
+        setSelectedSectionIds([ALL_SECTIONS]);
+        setSectionsFiltered(sections);
         setLoadingList(false);
         return;
       }
 
-      const newSelectedProductType = e
-        ? [...selectedProductType.filter((type) => type !== 'ALL'), productType]
-        : selectedProductType.filter((type) => type !== productType);
+      const nextSelected = active
+        ? [...selectedSectionIds.filter((k) => k !== ALL_SECTIONS), sectionKey]
+        : selectedSectionIds.filter((k) => k !== sectionKey);
 
-      setSelectedProductType(newSelectedProductType);
+      setSelectedSectionIds(nextSelected);
 
-      const filteredProductListByType = productListByType.map((productType) => {
-        if (newSelectedProductType.includes(productType.type)) {
-          return productType;
-        }
-        return { ...productType, productLists: [] };
-      });
+      const filtered = sections.map((section) =>
+        nextSelected.includes(String(section.id))
+          ? section
+          : { ...section, items: [] },
+      );
 
-      setProductListByTypeFiltered(filteredProductListByType);
+      setSectionsFiltered(filtered);
       setLoadingList(false);
     });
   };
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    const searchValue = e.target.value.toLowerCase();
-    const filteredProductListByType = productListByType.map((productType) => {
-      const filteredProducts = productType.productLists.filter(
+    const search = e.target.value.toLowerCase();
+    const filtered = sections.map((section) => {
+      const items = section.items.filter(
         (product) =>
-          product.title.toLowerCase().includes(searchValue) ||
+          product.title.toLowerCase().includes(search) ||
           product.ingredientList.some((ingredient) =>
-            ingredient.name.toLowerCase().includes(searchValue),
+            ingredient.name.toLowerCase().includes(search),
           ),
       );
-      return { ...productType, productLists: filteredProducts };
+      return { ...section, items };
     });
-    setProductListByTypeFiltered(filteredProductListByType);
+    setSectionsFiltered(filtered);
   };
 
   useEffect(() => {
-    if (productList.length) filterProductsByType();
-  }, [productList]);
+    setSectionsFiltered(sections);
+  }, [sections]);
 
-  if (loadingProducts) {
+  if (loadingMenu) {
     return (
       <ShowcaseContainerFlex vertical align="center">
         <ContainerLoading />
@@ -307,7 +103,7 @@ const Showcase = ({ isNavigating, setIsNavigating }: ShowcaseProps) => {
     return (
       <ShowcaseContainerFlex vertical align="center">
         <Flex style={{ padding: '32px', color: '#d81616' }}>
-          Erro ao carregar produtos. Tente novamente mais tarde.
+          Erro ao carregar o menu. Tente novamente mais tarde.
         </Flex>
       </ShowcaseContainerFlex>
     );
@@ -369,22 +165,24 @@ const Showcase = ({ isNavigating, setIsNavigating }: ShowcaseProps) => {
               mode="multiple"
               style={{ width: '100%' }}
               value={
-                selectedProductType.includes('ALL')
+                selectedSectionIds.includes(ALL_SECTIONS)
                   ? ['Todos']
-                  : productListByType
-                      .filter((productType) =>
-                        selectedProductType.includes(productType.type),
+                  : sections
+                      .filter((section) =>
+                        selectedSectionIds.includes(String(section.id)),
                       )
-                      .map((productType) => productType.typeName)
+                      .map((section) => section.label)
               }
-              onDeselect={(value) =>
-                handleProductFilter(
+              onDeselect={(value) => {
+                const target = sections.find(
+                  (section) => section.label === value,
+                );
+                handleSectionFilter(
                   false,
-                  productListByType.find((type) => type.typeName === value)
-                    ?.type || 'ALL',
-                )
-              }
-              onClear={() => handleProductFilter(true, 'ALL')}
+                  target ? String(target.id) : ALL_SECTIONS,
+                );
+              }}
+              onClear={() => handleSectionFilter(true, ALL_SECTIONS)}
               showSearch={false}
               open={false}
               suffixIcon={null}
@@ -397,9 +195,9 @@ const Showcase = ({ isNavigating, setIsNavigating }: ShowcaseProps) => {
             <FilterDrawer
               open={openFilterDrawer}
               onClose={() => setOpenFilterDrawer(false)}
-              selectedProductType={selectedProductType}
-              handleProductFilter={handleProductFilter}
-              productListByType={productListByType}
+              selectedSectionIds={selectedSectionIds}
+              handleSectionFilter={handleSectionFilter}
+              sections={sections}
               loading={loadingList || isPending}
             />
           </Flex>
@@ -429,28 +227,33 @@ const Showcase = ({ isNavigating, setIsNavigating }: ShowcaseProps) => {
           >
             <SwitchFilter
               label="Todos"
-              selectedProductType={selectedProductType.includes('ALL')}
+              selectedProductType={selectedSectionIds.includes(ALL_SECTIONS)}
               handleProductFilter={() =>
-                handleProductFilter(selectedProductType.includes('ALL'), 'ALL')
+                handleSectionFilter(
+                  selectedSectionIds.includes(ALL_SECTIONS),
+                  ALL_SECTIONS,
+                )
               }
               loading={loadingList || isPending}
               defaultChecked={true}
             />
-            {productListByType.map((productType) => (
-              <SwitchFilter
-                label={productType.typeName}
-                selectedProductType={selectedProductType.includes(
-                  productType.type,
-                )}
-                handleProductFilter={() =>
-                  handleProductFilter(
-                    !selectedProductType.includes(productType.type),
-                    productType.type,
-                  )
-                }
-                loading={loadingList || isPending}
-              />
-            ))}
+            {sections.map((section) => {
+              const key = String(section.id);
+              return (
+                <SwitchFilter
+                  key={key}
+                  label={section.label}
+                  selectedProductType={selectedSectionIds.includes(key)}
+                  handleProductFilter={() =>
+                    handleSectionFilter(
+                      !selectedSectionIds.includes(key),
+                      key,
+                    )
+                  }
+                  loading={loadingList || isPending}
+                />
+              );
+            })}
           </Flex>
         </Flex>
       ) : null}
@@ -463,7 +266,7 @@ const Showcase = ({ isNavigating, setIsNavigating }: ShowcaseProps) => {
               ? '1034px'
               : !isXxl
                 ? '1344px'
-                : '1524px', // '1428px', // '1376px',
+                : '1524px',
           position: 'sticky',
           top: 0,
         }}
@@ -486,60 +289,61 @@ const Showcase = ({ isNavigating, setIsNavigating }: ShowcaseProps) => {
           >
             <SwitchFilter
               label="Todos"
-              selectedProductType={selectedProductType.includes('ALL')}
+              selectedProductType={selectedSectionIds.includes(ALL_SECTIONS)}
               handleProductFilter={() =>
-                handleProductFilter(selectedProductType.includes('ALL'), 'ALL')
+                handleSectionFilter(
+                  selectedSectionIds.includes(ALL_SECTIONS),
+                  ALL_SECTIONS,
+                )
               }
               loading={loadingList || isPending}
               defaultChecked={true}
             />
-            {productListByType.map((productType) => (
-              <SwitchFilter
-                label={productType.typeName}
-                selectedProductType={selectedProductType.includes(
-                  productType.type,
-                )}
-                handleProductFilter={() =>
-                  handleProductFilter(
-                    !selectedProductType.includes(productType.type),
-                    productType.type,
-                  )
-                }
-                loading={loadingList || isPending}
-              />
-            ))}
+            {sections.map((section) => {
+              const key = String(section.id);
+              return (
+                <SwitchFilter
+                  key={key}
+                  label={section.label}
+                  selectedProductType={selectedSectionIds.includes(key)}
+                  handleProductFilter={() =>
+                    handleSectionFilter(
+                      !selectedSectionIds.includes(key),
+                      key,
+                    )
+                  }
+                  loading={loadingList || isPending}
+                />
+              );
+            })}
           </Flex>
         ) : null}
         <ShowCaseFlex className="show-case-flex" vertical gap={32}>
-          {productListByTypeFiltered.map((productByType) =>
-            productByType.productLists.length ? (
-              <Flex vertical gap={16} key={productByType.id}>
-                {productByType.productLists.length ? (
-                  <ProductTypeTitleFlex id={productByType.type}>
-                    <ProductTypeTitle level={2}>
-                      {productByType.typeName}
-                    </ProductTypeTitle>
-                  </ProductTypeTitleFlex>
-                ) : null}
+          {sectionsFiltered.map((section) =>
+            section.items.length ? (
+              <Flex vertical gap={16} key={section.id}>
+                <ProductTypeTitleFlex id={`section-${section.id}`}>
+                  <ProductTypeTitle level={2}>{section.label}</ProductTypeTitle>
+                </ProductTypeTitleFlex>
 
                 <Carousel
                   arrows={
                     isXs
-                      ? productByType.productLists.length > 4
+                      ? section.items.length > 4
                       : isMdDown
-                        ? productByType.productLists.length > 4
+                        ? section.items.length > 4
                         : isLg
-                          ? productByType.productLists.length > 6
-                          : productByType.productLists.length > 8
+                          ? section.items.length > 6
+                          : section.items.length > 8
                   }
                   dots={
                     isXs
-                      ? productByType.productLists.length > 4
+                      ? section.items.length > 4
                       : isMdDown
-                        ? productByType.productLists.length > 4
+                        ? section.items.length > 4
                         : isLg
-                          ? productByType.productLists.length > 6
-                          : productByType.productLists.length > 8
+                          ? section.items.length > 6
+                          : section.items.length > 8
                   }
                   draggable={isLgDown}
                   infinite={false}
@@ -548,12 +352,12 @@ const Showcase = ({ isNavigating, setIsNavigating }: ShowcaseProps) => {
                   {Array.from({
                     length: Math.ceil(
                       isXs
-                        ? productByType.productLists.length / 4
+                        ? section.items.length / 4
                         : isMdDown
-                          ? productByType.productLists.length / 4
+                          ? section.items.length / 4
                           : isLg
-                            ? productByType.productLists.length / 6
-                            : productByType.productLists.length / 8,
+                            ? section.items.length / 6
+                            : section.items.length / 8,
                     ),
                   }).map((_, index) => {
                     const start = isXs
@@ -563,7 +367,7 @@ const Showcase = ({ isNavigating, setIsNavigating }: ShowcaseProps) => {
                         : isLg
                           ? index * 6
                           : index * 8;
-                    const productsChunk = productByType.productLists.slice(
+                    const productsChunk = section.items.slice(
                       start,
                       isXs
                         ? start + 4

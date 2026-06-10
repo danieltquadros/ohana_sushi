@@ -62,7 +62,7 @@ const ProductInList = ({
             >
               {item.product.title}
             </Text>
-            {item.product.type === 'COMBO' ? (
+            {item.product.kind === 'COMBO' ? (
               <Text
                 style={{
                   lineHeight: 1.1,

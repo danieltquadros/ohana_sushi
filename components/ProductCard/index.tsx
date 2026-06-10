@@ -1,4 +1,5 @@
 import { Product } from '@/interfaces/Product';
+import { cartKey } from '@/utils/cartKey';
 import { ProductCardContainerFlex } from './styles';
 import { Flex, Tag, Typography } from 'antd';
 import calculateComboTotalItems from '@/utils/calculateComboTotalItems';
@@ -35,9 +36,10 @@ const ProductCard = ({ product, position }: ProductCardProps) => {
     setImageLoading(false);
   };
 
-  const findProductQuantityInCart = (productId: number) => {
+  const findProductQuantityInCart = () => {
     if (cart) {
-      const hasProduct = cart.cartItemList.find((cil) => cil.id === productId);
+      const key = cartKey(product);
+      const hasProduct = cart.cartItemList.find((cil) => cil.id === key);
       if (hasProduct && hasProduct.id) {
         return true;
       }
@@ -48,7 +50,7 @@ const ProductCard = ({ product, position }: ProductCardProps) => {
 
   return (
     <ProductCardContainerFlex
-      $hasProduct={findProductQuantityInCart(product.id)}
+      $hasProduct={findProductQuantityInCart()}
       $isXs={isXs}
       $isMdDown={isMdDown}
       $position={position}
@@ -95,7 +97,7 @@ const ProductCard = ({ product, position }: ProductCardProps) => {
           >
             {product.title}
           </Title>
-          {product.type === 'COMBO' ? (
+          {product.kind === 'COMBO' ? (
             <Tag
               style={{
                 marginInlineEnd: '0px',
