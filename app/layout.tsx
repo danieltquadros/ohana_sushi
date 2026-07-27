@@ -27,10 +27,36 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.ohanasushidelivery.com.br'),
   title: 'Ohana Sushi Delivery',
-  description: 'Ohana Sushi - Delivery de Comida Japonesa',
+  description:
+    'Ohana Sushi — Delivery de comida japonesa. Combos, temakis, hots, pokes e mais, entregues fresquinhos.',
   icons: {
     icon: '/images/newLogoB.png',
+  },
+  openGraph: {
+    title: 'Ohana Sushi Delivery',
+    description:
+      'Delivery de comida japonesa. Combos, temakis, hots, pokes e mais, entregues fresquinhos.',
+    url: 'https://www.ohanasushidelivery.com.br',
+    siteName: 'Ohana Sushi Delivery',
+    images: [
+      {
+        url: '/images/newLogoB.png',
+        width: 1200,
+        height: 630,
+        alt: 'Ohana Sushi Delivery',
+      },
+    ],
+    locale: 'pt_BR',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Ohana Sushi Delivery',
+    description:
+      'Delivery de comida japonesa. Combos, temakis, hots, pokes e mais.',
+    images: ['/images/newLogoB.png'],
   },
 };
 
