@@ -40,7 +40,7 @@ This frontend renders the public-facing menu, handles cart logic, and orchestrat
 
 ## 🛠️ Tech Stack
 
-- **Framework:** Next.js 15 (App Router) + React
+- **Framework:** Next.js 14 (App Router) + React
 - **Language:** TypeScript
 - **Styling:** styled-components + Ant Design
 - **State management:** Redux Toolkit
@@ -51,6 +51,7 @@ This frontend renders the public-facing menu, handles cart logic, and orchestrat
 
 - 📱 Responsive product catalog with dynamic categories
 - 🛒 Cart with persistent state across sessions
+- Phone-based guest checkout with Pix payment (QR code + copy-paste)
 - 🍣 Combo customization (when applicable)
 - 💬 WhatsApp integration for order placement
 - ⚡ SSR/SSG with Next.js for performance and SEO
@@ -83,7 +84,7 @@ App will be available at [http://localhost:3000](http://localhost:3000).
 Create a `.env.local` file in the project root:
 
 ```env
-NEXT_PUBLIC_API_URL=https://ohana-api-dev-a7kk.onrender.com/api
+NEXT_PUBLIC_API_URL=https://<api-url>/api
 ```
 
 For production, point to the production API:
