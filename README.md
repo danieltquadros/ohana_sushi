@@ -56,6 +56,28 @@ This frontend renders the public-facing menu, handles cart logic, and orchestrat
 - 💬 WhatsApp integration for order placement
 - ⚡ SSR/SSG with Next.js for performance and SEO
 
+## 📸 Screenshots
+
+| Menu | Combo customization | Checkout |
+|---|---|---|
+| ![Menu](docs/screenshots/menu.png) | ![Combo](docs/screenshots/combo.png) | ![Checkout](docs/screenshots/checkout.png) |
+
+## 🏛️ Architecture & Key Decisions
+
+Part of a 3-app system in commercial production since **July 2025**.
+Full architecture diagram and backend decisions:
+**[ohana-api](https://github.com/danieltquadros/ohana-api#readme)**.
+
+Frontend-specific decisions:
+
+**`MenuSection` abstraction** — menu sections are data-driven and
+controlled by the admin panel, replacing a hardcoded ~240-line rendering
+switch and decoupling display from technical product types.
+
+**Typed composite keys** — cart items are keyed by typed
+`{entity}-{id}` composite keys, resolving ID collisions between
+autoincrement entities (e.g., Product vs Combo).
+
 ## 🚀 Getting Started
 
 ### Prerequisites
