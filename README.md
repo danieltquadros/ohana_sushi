@@ -3,7 +3,6 @@
 [![Next.js](https://img.shields.io/badge/Next.js-15-000000?logo=nextdotjs)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Vercel](https://img.shields.io/badge/Deployed-Vercel-000000?logo=vercel)](https://www.ohanasushidelivery.com.br)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 > Customer-facing e-commerce for the Ohana Sushi delivery system.
 > Built with Next.js, styled-components, Ant Design, and Redux.
@@ -118,4 +117,8 @@ src/
 
 ## 📄 License
 
-MIT
+Copyright © 2025–2026 Daniel Teixeira Quadros. All rights reserved.
+
+This source code is publicly available for reading and portfolio
+evaluation purposes only. No permission is granted to use, copy,
+modify, or distribute this software, in whole or in part.
