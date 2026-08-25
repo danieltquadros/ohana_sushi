@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useAppSelector, useAppDispatch } from '@/hooks/redux';
 import { Product } from '@/interfaces/Product';
 import { CartItemList } from '@/interfaces/CartItemList';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { CartInterface } from '@/interfaces/CartInterface';
 import { setCart } from '@/store/features/cart';
 import { cartKey } from '@/utils/cartKey';
@@ -15,6 +15,7 @@ import { mdiMinusThick, mdiPlusThick } from '@mdi/js';
 import RemoveItemModal from '../RemoveItemModal';
 import ButtonSun from '../ButtonSun';
 import { DefaultButton } from './styles';
+import VisuallyHidden from '../VisuallyHidden';
 
 interface ChooseButtonProps {
   product: Product;
@@ -39,6 +40,8 @@ const ChooseButton = ({
 
   const [quantityItem, setQuantityItem] = useState<number>(0);
   const [isRemoveItemModalOpen, setIsRemoveItemModalOpen] = useState(false);
+  const [removedProduct, setRemovedProduct] = useState<string | null>(null);
+  const prevQuantityRef = useRef(quantityItem);
 
   const handleSubtractItem = () => {
     if (activeAlert && quantityItem === 1) {
@@ -77,8 +80,7 @@ const ChooseButton = ({
   const handleAddItem = () => {
     const key = cartKey(product);
     if (cart) {
-      const item =
-        cart.cartItemList.find((cil) => cil.id === key) || null;
+      const item = cart.cartItemList.find((cil) => cil.id === key) || null;
       if (item) {
         setQuantityItem(quantityItem + 1);
         const newCartItem = cart.cartItemList.map((cil) => {
@@ -140,12 +142,22 @@ const ChooseButton = ({
     if (cart) {
       const key = cartKey(product);
       const newQuantityItem =
-        cart.cartItemList.find((cartItem) => cartItem.id === key)
-          ?.quantity || 0;
+        cart.cartItemList.find((cartItem) => cartItem.id === key)?.quantity ||
+        0;
       setQuantityItem(newQuantityItem);
       onHasItem(newQuantityItem > 0);
     }
   }, [cart]);
+
+  useEffect(() => {
+    if (prevQuantityRef.current > 0 && quantityItem === 0) {
+      setRemovedProduct(product.title);
+      const timer = setTimeout(() => setRemovedProduct(null), 2000);
+      prevQuantityRef.current = quantityItem;
+      return () => clearTimeout(timer);
+    }
+    prevQuantityRef.current = quantityItem;
+  }, [quantityItem, product.title]);
 
   return (
     <Flex align="center">
@@ -153,11 +165,23 @@ const ChooseButton = ({
         <>
           {sunButton ? (
             <ButtonSun
+              aria-label={
+                quantityItem === 1
+                  ? `Remover ${product.title}`
+                  : `Remover uma unidade de ${product.title}`
+              }
               onClick={handleSubtractItem}
               icon={<Icon path={mdiMinusThick} size={0.7} color={'#FFF'} />}
             />
           ) : (
-            <DefaultButton onClick={handleSubtractItem}>
+            <DefaultButton
+              onClick={handleSubtractItem}
+              aria-label={
+                quantityItem === 1
+                  ? `Remover ${product.title}`
+                  : `Remover uma unidade de ${product.title}`
+              }
+            >
               <Icon path={mdiMinusThick} size={0.7} color={'#FFF'} />
             </DefaultButton>
           )}
@@ -181,13 +205,32 @@ const ChooseButton = ({
       {sunButton ? (
         <ButtonSun
           onClick={handleAddItem}
+          aria-label={
+            quantityItem === 0
+              ? `Adicionar ${product.title} ao carrinho`
+              : `Adicionar mais uma unidade de ${product.title}`
+          }
           icon={<Icon path={mdiPlusThick} size={0.7} color={'#FFF'} />}
         />
       ) : (
-        <DefaultButton onClick={handleAddItem}>
+        <DefaultButton
+          onClick={handleAddItem}
+          aria-label={
+            quantityItem === 0
+              ? `Adicionar ${product.title} ao carrinho`
+              : `Adicionar mais uma unidade de ${product.title}`
+          }
+        >
           <Icon path={mdiPlusThick} size={0.7} color={'#FFF'} />
         </DefaultButton>
       )}
+      <VisuallyHidden aria-live="polite" aria-atomic="true" role="status">
+        {removedProduct
+          ? `${removedProduct} removido do carrinho.`
+          : quantityItem > 0
+            ? `${quantityItem} ${quantityItem === 1 ? 'unidade' : 'unidades'} de ${product.title} no carrinho.`
+            : ''}
+      </VisuallyHidden>
       <RemoveItemModal
         item={
           cart?.cartItemList.find((cil) => cil.id === cartKey(product)) || null
