@@ -21,7 +21,7 @@ interface ProductCardProps {
 const ProductCard = ({ product, position }: ProductCardProps) => {
   const cart: CartInterface | null = useAppSelector((state) => state.cart.cart);
 
-  const { Title, Text } = Typography;
+  const { Text } = Typography;
   const { isMdDown, isXs } = useResponsive();
   const [imageError, setImageError] = useState(false);
   const [imageLoading, setImageLoading] = useState(true);
@@ -57,137 +57,136 @@ const ProductCard = ({ product, position }: ProductCardProps) => {
       vertical
       justify="space-between"
     >
-      <Flex
-        vertical
-        style={{
-          padding: '8px 8px 0 8px',
-          height: '100%',
-          background: '#fff',
-          borderRadius:
-            isXs && position === 0
-              ? '3px 0 0 3px'
-              : isXs && position === 1
-                ? '0 3px 3px 0'
-                : isXs && position === 2
-                  ? '3px 0 0 3px'
-                  : isXs && position === 3
-                    ? '0 3px 3px 0'
-                    : '3px 3px 0 0',
-        }}
+      <button
+        type="button"
+        onClick={() => setOpenProductModal(true)}
+        aria-label={`Ver detalhes de ${product.title}`}
+        style={{ border: 'none' }}
       >
         <Flex
-          gap={4}
-          align="center"
-          justify="space-between"
-          style={{ cursor: 'pointer', marginBottom: '8px' }}
-          onClick={() => setOpenProductModal(true)}
-          vertical={isXs}
+          vertical
+          style={{
+            padding: '8px 8px 0 8px',
+            height: '100%',
+            background: '#fff',
+            borderRadius:
+              isXs && position === 0
+                ? '3px 0 0 3px'
+                : isXs && position === 1
+                  ? '0 3px 3px 0'
+                  : isXs && position === 2
+                    ? '3px 0 0 3px'
+                    : isXs && position === 3
+                      ? '0 3px 3px 0'
+                      : '3px 3px 0 0',
+          }}
         >
-          <Title
-            level={5}
-            style={{
-              margin: 0,
-              fontSize: `${product.title.length > 16 ? '1.2rem' : isMdDown ? '1.2rem' : '1.4rem'}`,
-              fontWeight: 700,
-              fontFamily: 'var(--inria-sans) !important',
-              lineHeight: 1.1,
-              height: '42px',
-              alignContent: 'center',
-            }}
+          <Flex
+            gap={4}
+            align="center"
+            justify="space-between"
+            style={{ marginBottom: '8px' }}
+            vertical={isXs}
           >
-            {product.title}
-          </Title>
-          {product.kind === 'COMBO' ? (
-            <Tag
-              style={{
-                marginInlineEnd: '0px',
-                marginBottom: isXs ? '4px' : '',
-                border: isXs ? '1px solid #333' : 'none',
-                width: isXs ? '100%' : 'auto',
-                textAlign: isXs ? 'center' : 'left',
-              }}
-              color={isXs ? '#FFF' : '#000'}
-            >
-              <Text
-                style={{
-                  fontSize: '0.8rem',
-                  color: isXs ? '#333' : '#fff',
-
-                  padding: isXs ? '2px 4px' : '0',
-
-                  lineHeight: 1.1,
-                  fontWeight: 600,
-                }}
-              >
-                {`${calculateComboTotalItems(product.ingredientList)} peças`}
-              </Text>
-            </Tag>
-          ) : null}
-        </Flex>
-        <Flex vertical justify="space-between" style={{ height: '100%' }}>
-          <Flex vertical>
-            {imageError ? (
-              <div
-                style={{
-                  width: '100%',
-                  aspectRatio: '1/1',
-                  background: '#f0f0f0',
-                  borderRadius: '4px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#999',
-                  cursor: 'pointer',
-                }}
-                onClick={() => setOpenProductModal(true)}
-              >
-                <Text style={{ fontSize: '0.8rem' }}>
-                  Imagem não disponível
-                </Text>
-              </div>
-            ) : (
-              <div
-                style={{
-                  width: '100%',
-                  aspectRatio: '1/1',
-                  position: 'relative',
-                  background: imageLoading ? '#f0f0f0' : '#fff',
-                  borderRadius: '4px',
-                  overflow: 'hidden',
-                  cursor: 'pointer',
-                }}
-                onClick={() => setOpenProductModal(true)}
-              >
-                <Image
-                  src={product.image}
-                  alt={product.title}
-                  fill
-                  sizes="(max-width: 768px) 100px, (max-width: 992px) 160px, 240px"
-                  style={{
-                    objectFit: 'cover',
-                  }}
-                  onError={handleImageError}
-                  onLoad={handleImageLoad}
-                  unoptimized={true}
-                />
-              </div>
-            )}
             <Text
-              ellipsis
               style={{
-                color: '#333',
-                padding: '8px 4px 6px 4px',
-                cursor: 'pointer',
+                margin: 0,
+                fontSize: `${product.title.length > 16 ? '1.2rem' : isMdDown ? '1.2rem' : '1.4rem'}`,
+                fontWeight: 700,
+                fontFamily: 'var(--inria-sans) !important',
+                lineHeight: 1.1,
+                height: '42px',
+                alignContent: 'center',
               }}
-              onClick={() => setOpenProductModal(true)}
             >
-              {product.ingredientList.map((ingredient, index) => {
-                return `${ingredient.quantity} ${ingredient.name} ${index < product.ingredientList.length - 1 ? ', ' : ''}`;
-              })}
+              {product.title}
             </Text>
+            {product.kind === 'COMBO' ? (
+              <Tag
+                style={{
+                  marginInlineEnd: '0px',
+                  marginBottom: isXs ? '4px' : '',
+                  border: isXs ? '1px solid #333' : 'none',
+                  width: isXs ? '100%' : 'auto',
+                  textAlign: isXs ? 'center' : 'left',
+                }}
+                color={isXs ? '#FFF' : '#000'}
+              >
+                <Text
+                  style={{
+                    fontSize: '0.8rem',
+                    color: isXs ? '#333' : '#fff',
+
+                    padding: isXs ? '2px 4px' : '0',
+
+                    lineHeight: 1.1,
+                    fontWeight: 600,
+                  }}
+                >
+                  {`${calculateComboTotalItems(product.ingredientList)} peças`}
+                </Text>
+              </Tag>
+            ) : null}
+          </Flex>
+          <Flex vertical justify="space-between" style={{ height: '100%' }}>
+            <Flex vertical>
+              {!imageError ? (
+                <div
+                  style={{
+                    width: '100%',
+                    aspectRatio: '1/1',
+                    background: '#f0f0f0',
+                    borderRadius: '4px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#999',
+                  }}
+                >
+                  <Text style={{ fontSize: '0.8rem' }}>
+                    Imagem não disponível
+                  </Text>
+                </div>
+              ) : (
+                <div
+                  style={{
+                    width: '100%',
+                    aspectRatio: '1/1',
+                    position: 'relative',
+                    background: imageLoading ? '#f0f0f0' : '#fff',
+                    borderRadius: '4px',
+                    overflow: 'hidden',
+                  }}
+                >
+                  <Image
+                    src={product.image}
+                    alt={product.title}
+                    fill
+                    sizes="(max-width: 768px) 100px, (max-width: 992px) 160px, 240px"
+                    style={{
+                      objectFit: 'cover',
+                    }}
+                    onError={handleImageError}
+                    onLoad={handleImageLoad}
+                    unoptimized={true}
+                  />
+                </div>
+              )}
+              <Text
+                ellipsis
+                style={{
+                  color: '#333',
+                  padding: '8px 4px 6px 4px',
+                }}
+              >
+                {product.ingredientList.map((ingredient, index) => {
+                  return `${ingredient.quantity} ${ingredient.name} ${index < product.ingredientList.length - 1 ? ', ' : ''}`;
+                })}
+              </Text>
+            </Flex>
           </Flex>
         </Flex>
-      </Flex>
+      </button>
       <Flex
         justify="space-between"
         align={isXs ? 'flex-end' : 'center'}
@@ -210,10 +209,8 @@ const ProductCard = ({ product, position }: ProductCardProps) => {
           flexDirection: isXs ? 'column-reverse' : 'row',
         }}
         gap={8}
-        // vertical={isXs}
       >
-        <Title
-          level={5}
+        <Text
           style={{
             marginBottom: 0,
             marginTop: 0,
@@ -229,7 +226,7 @@ const ProductCard = ({ product, position }: ProductCardProps) => {
             style: 'currency',
             currency: 'BRL',
           }).format(product.price)}
-        </Title>
+        </Text>
         <ChooseButton
           product={product}
           sunButton
