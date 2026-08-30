@@ -1,12 +1,13 @@
-import { Flex, Select, Typography } from 'antd';
+import { Flex } from 'antd';
 import {
   ChangeEventHandler,
   Dispatch,
   ReactNode,
   SetStateAction,
   useEffect,
+  useId,
 } from 'react';
-import { ErrorMessage, StyledSelect } from './styles';
+import { ErrorMessage, StyledSelect, InputLabel } from './styles';
 import deliveryCostList from './mock';
 import { AddressProps } from '@/interfaces/AddressForm';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
@@ -17,7 +18,9 @@ import { DeliveryCost } from '@/interfaces/DeliveryCost';
 
 interface InputSendCalculationProps {
   label?: string;
+  id?: string;
   value?: string | number;
+  required?: boolean;
   maxLength?: number;
   placeholder?: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
@@ -41,7 +44,9 @@ interface InputSendCalculationProps {
 
 const InputSendCalculation = ({
   label,
+  id,
   value,
+  required = false,
   maxLength,
   placeholder,
   onChange,
@@ -58,7 +63,10 @@ const InputSendCalculation = ({
   onAddressForm,
   // setCurrentDeliveryCost,
 }: InputSendCalculationProps) => {
-  const { Text } = Typography;
+  const generatedId = useId();
+  const inputId = id ?? generatedId;
+  const errorId = `${inputId}-error`;
+  const hasError = showErrorMessage && !!errorMessage;
   const cart: CartInterface | null = useAppSelector((state) => state.cart.cart);
   const deliveryCost: DeliveryCost | null = useAppSelector(
     (state) => state.neighborhood.neighborhood,
@@ -125,10 +133,15 @@ const InputSendCalculation = ({
 
   return (
     <Flex vertical style={{ width: '100%' }} {...containerProps}>
-      <Text strong {...labelProps}>
+      <InputLabel htmlFor={inputId} {...labelProps}>
         {label}
-      </Text>
+        {required && <span aria-hidden="true"> *</span>}
+      </InputLabel>
       <StyledSelect
+        id={inputId}
+        aria-required={required || undefined}
+        aria-invalid={hasError || undefined}
+        aria-describedby={hasError ? errorId : undefined}
         showSearch
         allowClear
         placeholder="Selecione um bairro"
@@ -150,9 +163,11 @@ const InputSendCalculation = ({
             label: item.name,
           }))}
       />
-      {showErrorMessage && errorMessage ? (
-        <ErrorMessage {...errorMessageProps}>{errorMessage}</ErrorMessage>
-      ) : !showErrorMessage && errorMessage ? (
+      {hasError ? (
+        <ErrorMessage id={errorId} {...errorMessageProps}>
+          {errorMessage}
+        </ErrorMessage>
+      ) : errorMessage ? (
         <span style={{ width: '100%', height: '18.84px' }} />
       ) : null}
     </Flex>

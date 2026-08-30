@@ -1,10 +1,12 @@
-import { Flex, Typography } from 'antd';
-import { ErrorMessage, StyledInput } from './styles';
-import { ChangeEventHandler, ReactNode } from 'react';
+import { Flex } from 'antd';
+import { ErrorMessage, StyledInput, InputLabel } from './styles';
+import { ChangeEventHandler, ReactNode, useId } from 'react';
 
 interface InputFormProps {
   label?: string;
+  id?: string;
   value?: string | number;
+  required?: boolean;
   maxLength?: number;
   placeholder?: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
@@ -27,7 +29,9 @@ interface InputFormProps {
 
 const InputForm = ({
   label,
+  id,
   value,
+  required = false,
   maxLength,
   placeholder,
   onChange,
@@ -42,14 +46,22 @@ const InputForm = ({
   redStyled = false,
   allowClear,
 }: InputFormProps) => {
-  const { Text } = Typography;
+  const generatedId = useId();
+  const inputId = id ?? generatedId;
+  const errorId = `${inputId}-error`;
+  const hasError = showErrorMessage && !!errorMessage;
 
   return (
     <Flex vertical style={{ width: containerWidth }} {...containerProps}>
-      <Text strong {...labelProps}>
+      <InputLabel htmlFor={inputId} {...labelProps}>
         {label}
-      </Text>
+        {required && <span aria-hidden="true"> *</span>}
+      </InputLabel>
       <StyledInput
+        id={inputId}
+        aria-required={required || undefined}
+        aria-invalid={hasError || undefined}
+        aria-describedby={hasError ? errorId : undefined}
         size="large"
         value={value}
         onChange={onChange}
@@ -60,9 +72,11 @@ const InputForm = ({
         allowClear={allowClear}
         {...props}
       />
-      {showErrorMessage && errorMessage ? (
-        <ErrorMessage {...errorMessageProps}>{errorMessage}</ErrorMessage>
-      ) : !showErrorMessage && errorMessage ? (
+      {hasError ? (
+        <ErrorMessage id={errorId} {...errorMessageProps}>
+          {errorMessage}
+        </ErrorMessage>
+      ) : errorMessage ? (
         <span style={{ width: '100%', height: '18.84px' }} />
       ) : null}
     </Flex>

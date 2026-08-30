@@ -1,6 +1,6 @@
-import { Alert, Col, Flex, Row, Typography } from 'antd';
+import { Col, Flex, Row, Typography } from 'antd';
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
-import { AddressFormContainer, ErrorMessage } from './styles';
+import { AddressFormContainer, ZipCodeBox } from './styles';
 import Icon from '@mdi/react';
 import { mdiMapMarkerRadiusOutline } from '@mdi/js';
 import InputForm from '@/components/InputForm';
@@ -126,21 +126,6 @@ const AddressForm = ({
     }
   };
 
-  const zipCodeAlertDescription = () => (
-    <Flex vertical gap={4}>
-      <InputForm
-        label="Buscar endereço por CEP"
-        value={addressForm.zipCode}
-        onChange={handleZipCode}
-      />
-      {showZipCodeErrorMessage ? (
-        <ErrorMessage>CEP inválido!</ErrorMessage>
-      ) : (
-        <span style={{ width: '100%', height: '18.84px' }} />
-      )}
-    </Flex>
-  );
-
   const handleStreetName = (event: ChangeEvent<HTMLInputElement>) => {
     const newStreetName = event.target.value;
     onAddressForm({ ...addressForm, streetName: newStreetName });
@@ -217,7 +202,8 @@ const AddressForm = ({
       <Row gutter={8}>
         <Col xs={24} md={12}>
           <InputForm
-            label="Nome *"
+            label="Nome"
+            required
             value={addressForm.name}
             onChange={handleName}
             maxLength={100}
@@ -233,7 +219,8 @@ const AddressForm = ({
         </Col>
         <Col xs={24} md={12}>
           <InputForm
-            label="Whatsapp *"
+            label="Whatsapp"
+            required
             value={addressForm.phone}
             onChange={handlePhone}
             maxLength={15}
@@ -262,20 +249,20 @@ const AddressForm = ({
       </Flex>
       <Row gutter={8}>
         <Col span={24}>
-          <Alert
-            description={zipCodeAlertDescription()}
-            style={{
-              background: '#d8161620',
-              border: '1px solid #d81616',
-              borderRadius: '6px',
-              padding: '12px',
-              marginBottom: '18.84px',
-            }}
-          />
+          <ZipCodeBox>
+            <InputForm
+              label="Buscar endereço por CEP"
+              value={addressForm.zipCode}
+              onChange={handleZipCode}
+              errorMessage="CEP inválido!"
+              showErrorMessage={showZipCodeErrorMessage}
+            />
+          </ZipCodeBox>
         </Col>
         <Col xs={24} md={18}>
           <InputForm
-            label="Logradouro (rua/avenida...) *"
+            label="Logradouro (rua/avenida...)"
+            required
             value={addressForm.streetName}
             onChange={handleStreetName}
             errorMessage="Logradouro é obrigatório"
@@ -284,7 +271,8 @@ const AddressForm = ({
         </Col>
         <Col xs={8} md={6}>
           <InputForm
-            label="Número *"
+            label="Número"
+            required
             value={addressForm.number}
             onChange={handleNumber}
             errorMessage="Número é obrigatório"
@@ -300,7 +288,8 @@ const AddressForm = ({
         </Col>
         <Col xs={24} md={12}>
           <InputSendCalculation
-            label="Bairro*"
+            label="Bairro"
+            required
             value={addressForm.neighborhood}
             onChange={handleNeighborhood}
             errorMessage="Bairro é obrigatório"
@@ -311,7 +300,8 @@ const AddressForm = ({
         </Col>
         <Col xs={24} md={12}>
           <InputForm
-            label="Cidade *"
+            label="Cidade"
+            required
             value={addressForm.city}
             onChange={handleCity}
             errorMessage="Cidade é obrigatória"

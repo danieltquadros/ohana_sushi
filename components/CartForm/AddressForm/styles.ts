@@ -16,3 +16,11 @@ export const ErrorMessage = styled(Text)`
   color: red;
   font-size: 0.75rem;
 `;
+
+export const ZipCodeBox = styled.div`
+  background: #d8161620;
+  border: 1px solid #d81616;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 18.84px;
+`;

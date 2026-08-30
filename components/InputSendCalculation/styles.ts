@@ -30,6 +30,11 @@ export const StyledSelect = styled(Select)<StyledInputProps>`
   }
 `;
 
+export const InputLabel = styled.label`
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.88);
+`;
+
 export const ErrorMessage = styled(Text)`
   color: red;
   font-size: 0.75rem;
