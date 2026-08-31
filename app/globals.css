@@ -35,7 +35,8 @@ span,
 a,
 button,
 input,
-textarea {
+textarea,
+label {
   font-family: var(--inria-sans) !important;
 }
 
