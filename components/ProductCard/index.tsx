@@ -130,7 +130,7 @@ const ProductCard = ({ product, position }: ProductCardProps) => {
           </Flex>
           <Flex vertical justify="space-between" style={{ height: '100%' }}>
             <Flex vertical>
-              {!imageError ? (
+              {imageError ? (
                 <div
                   style={{
                     width: '100%',
