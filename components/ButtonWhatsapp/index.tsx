@@ -35,7 +35,7 @@ const ButtonWhatsapp = ({
   };
 
   return (
-    <ButtonWhatsappStyled style={style}>
+    <ButtonWhatsappStyled style={style} onClick={handleRedirection}>
       <Flex
         align="center"
         justify="center"
@@ -51,7 +51,6 @@ const ButtonWhatsapp = ({
       >
         {whatsappLogo}
         <span
-          onClick={handleRedirection}
           style={{
             color: 'inherit',
             textDecoration: 'none',
